@@ -1,0 +1,53 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Создание нового поста{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h1 class="h3 mb-0">Создать новый пост</h1>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Заголовок -->
+            <div class="mb-3">
+                <label for="id_title" class="form-label">Заголовок</label>
+                <input type="text" name="title" id="id_title"
+                       class="form-control" maxlength="250" required>
+            </div>
+
+            <!-- Содержание -->
+            <div class="mb-3">
+                <label for="id_body" class="form-label">Содержание</label>
+                <textarea name="body" id="id_body"
+                          class="form-control" rows="10" required></textarea>
+            </div>
+
+            <!-- Статус -->
+            <div class="mb-3">
+                <label for="id_status" class="form-label">Статус</label>
+                <select name="status" id="id_status" class="form-select">
+                    <option value="DF">Черновик</option>
+                    <option value="PB">Опубликовано</option>
+                </select>
+            </div>
+
+            <!-- Теги -->
+
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success">Создать пост</button>
+                <a href="{% url 'blog:post_list' %}" class="btn btn-secondary">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a href="{% url 'blog:post_list' %}" class="text-decoration-none">
+        ← Вернуться к списку постов
+    </a>
+</div>
+{% endblock %}

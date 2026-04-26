@@ -28,7 +28,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'asswecan2286@gmail.com'
+EMAIL_HOST_PASSWORD = 'yqfw cdhf kxry puus'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'blog.apps.BlogConfig',
+    'taggit',
 ]
 
 MIDDLEWARE = [

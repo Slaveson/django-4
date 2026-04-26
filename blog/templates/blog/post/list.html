@@ -1,0 +1,51 @@
+{% extends "blog/base.html" %}
+{% block title %}My Blog{% endblock %}
+{% load blog_tags %}
+{% block content %}
+<h1 class="mb-4">My Blog</h1>
+{% if tag %}
+<h2>Posts tagged with "{{ tag.name }}"</h2>
+{% endif %}
+<div class="row">
+    {% for post in posts %}
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title h4">
+                    <a href="{{ post.get_absolute_url }}" class="text-decoration-none">
+                        {{ post.title }}
+                    </a>
+                </h2>
+                <p class="tags">
+                    Tags:
+                    {% for tag in post.tags.all %}
+                    <a href="{% url 'blog:post_list_by_tag' tag.slug %}">
+                        {{ tag.name }}
+                    </a>
+                    {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                <p class="text-muted small">
+                    Published {{ post.publish }} by
+                    <a href="{% url 'blog:post_author' author=post.author %}" class="text-decoration-none">
+                        {{ post.author }}
+                    </a>
+                </p>
+                <p class="card-text">{{ post.body|markdown|truncatewords_html:30  }}</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">Нет постов для отображения.</div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="mt-4">
+    <a href="{% url 'blog:post_create' %}" class="btn btn-primary">
+        + Создать пост
+    </a>
+</div>
+{% include "pagination.html" with page=posts %}
+{% endblock %}
